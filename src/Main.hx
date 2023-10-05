@@ -8,7 +8,6 @@ import hxd.res.DefaultFont;
 
 class Main extends hxd.App {
     var anim : Anim;
-    var bar:Bitmap;
     override function init() {
         var t1 = Tile.fromColor(0xFF0000, 100, 100);
         var t2 = Tile.fromColor(0x00FF00, 100, 100);
@@ -28,8 +27,9 @@ class Main extends hxd.App {
         interaction.onClick = function(event : hxd.Event) {
             anim.pause = !anim.pause;
         }
-        var healthBar = new ProgressBar(0xFF0000, 100, 20);
-        bar = new Bitmap(healthBar.tile, s2d);
+        var healthBar = new ProgressBar(0, 100.0, s2d);
+        healthBar.y = 10;
+        healthBar.x = 10;
     }
     override function update(dt:Float) {
         //anim.rotation += 0.1;
