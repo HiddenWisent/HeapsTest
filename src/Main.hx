@@ -16,6 +16,7 @@ class Main extends hxd.App {
         anim.x = s2d.width * 0.5 -50;
         anim.y = s2d.height * 0.5 -50;
         anim.speed = 9;
+        anim.pause = true;
 
         var interaction = new h2d.Interactive(100,100,anim);
         interaction.onOver = function(event : hxd.Event) {
@@ -27,9 +28,11 @@ class Main extends hxd.App {
         interaction.onClick = function(event : hxd.Event) {
             anim.pause = !anim.pause;
         }
-        var healthBar = new ProgressBar(0, 100.0, s2d);
-        healthBar.y = 10;
-        healthBar.x = 10;
+        var healthBar = new ProgressBar(s2d, 0, 10, 100, 20);
+        var hpInt = new h2d.Interactive(100,20,healthBar);
+        hpInt.onClick = function(event : hxd.Event) {
+            healthBar.valueChange(4);
+        }
     }
     override function update(dt:Float) {
         //anim.rotation += 0.1;

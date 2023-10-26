@@ -1,3 +1,5 @@
+import haxe.display.JsonModuleTypes.JsonTypePathWithParams;
+import h2d.col.Ray;
 import h2d.Graphics;
 import h2d.filter.Glow;
 import h2d.Object;
@@ -9,32 +11,38 @@ class ProgressBar extends Object{
     var maxValue:Float;
     var currentValue:Float;
 
-    var background:Bitmap;
-    var barFill:Bitmap;
-    var color:Int;
+    var barWidth:Float;
+    var barHeight:Float;
 
+    var barFill:Graphics;
 
-    public function new(minValue:Float, maxValue:Float, parent:Object, color:Int = 0xFF0000, width:Int = 100, height:Int = 20) {
+    public function new(parent:Object, minValue:Float, maxValue:Float, width:Float = 100, height:Float = 20, ?startValue) {
         super(parent);
+        
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.currentValue = maxValue;
 
-        background = new Bitmap(Tile.fromColor(0x00000000,width,height),this);
-        background.filter = new Glow();
-        
-        var color = color;
-        
-        //barFill = new Bitmap(background);
-        barFill = new Bitmap(Tile.fromColor(color,100,20),this);
-        var interaction = new h2d.Interactive(width,height,background);
-        interaction.onClick = function(event : hxd.Event){
-            changeValue(50);
+        this.barWidth = width;
+        this.barHeight = height;
+        if (startValue != null){
+            valueChange(startValue);
         }
-        //changeValue(100);
+        else {
+            valueChange(maxValue);
+        }
+    }
+    
+    public function valueChange(value:Float){
+        currentValue = value;
+        drawBar();
     }
 
-    public function changeValue(value:Float){
-        currentValue = value;
+    function drawBar(){
+        barFill.remove();
+        var width = barWidth*(maxValue-minValue)*currentValue/100;
+        barFill = new Graphics(this);
+        barFill.beginFill(0xFF0000);
+        barFill.drawRect(0, 0, width, barHeight);
+        barFill.endFill();
     }
 }
