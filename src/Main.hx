@@ -1,3 +1,4 @@
+import h2d.TileGroup;
 import h2d.filter.Bloom;
 import h2d.filter.Glow;
 import format.ico.DIB.BMPInfo;
@@ -33,6 +34,23 @@ class Main extends hxd.App {
         hpInt.onClick = function(event : hxd.Event) {
             healthBar.valueChange(4);
         }
+
+        var tile = Tile.fromColor(0xFFFFFF, 50, 50);
+        var level = new TileGroup(tile, s2d);
+        level.x = s2d.width * 0.5;
+        level.y = s2d.width * 0.5;
+
+        level.add(0,0,tile);
+        level.add(50,0,tile);
+        level.add(-50,0,tile);
+        level.add(100,0,tile);
+        level.add(-100,-100,tile);
+        level.add(-100,0,tile);
+        level.add(50,-50,tile);
+        level.add(100,-50,tile);
+        level.add(100,-100,tile);
+        level.add(-100,-50,tile);
+
     }
     override function update(dt:Float) {
         //anim.rotation += 0.1;

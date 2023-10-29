@@ -1,10 +1,5 @@
-import haxe.display.JsonModuleTypes.JsonTypePathWithParams;
-import h2d.col.Ray;
 import h2d.Graphics;
-import h2d.filter.Glow;
 import h2d.Object;
-import h2d.Bitmap;
-import h2d.Tile;
 
 class ProgressBar extends Object{
     var minValue:Float;
