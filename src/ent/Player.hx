@@ -8,15 +8,19 @@ import hxd.*;
 class Player extends Entity {
 	var acc:Float;
 
+	var cellIndicator:Anim;
+
 	public override function new(x:Int, y:Int) {
-		super(x, y);
+		cellIndicator = new Anim([Res.gridIndicator.toTile()], game.s2d);
 		
+		super(x, y);
 		var tiles = Res.Ghost.toTile();
 		sprite = new Anim(tiles.split(6), game.s2d);
 		// sprite.setScale(1);
 		sprite.speed = 5;
-		
+
 		acc = 1;
+
 	}
 
 	override function update(dt:Float) {
@@ -39,5 +43,8 @@ class Player extends Entity {
 		if (Key.isPressed(Key.SPACE)) {
 			trace(cx + ' ' + cy);
 		}
+
+		cellIndicator.x = cx * game.cellSize;
+		cellIndicator.y = cy * game.cellSize;
 	}
 }
