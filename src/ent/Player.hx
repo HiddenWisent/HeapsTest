@@ -11,9 +11,9 @@ class Player extends Entity {
 	var cellIndicator:Anim;
 
 	public override function new(x:Int, y:Int) {
-		cellIndicator = new Anim([Res.gridIndicator.toTile()], game.s2d);
-		
 		super(x, y);
+		
+		cellIndicator = new Anim([Res.gridIndicator.toTile()], game.s2d);
 		var tiles = Res.Ghost.toTile();
 		sprite = new Anim(tiles.split(6), game.s2d);
 		// sprite.setScale(1);
