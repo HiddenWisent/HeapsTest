@@ -1,7 +1,14 @@
+# class paths
 -cp src
--lib heaps
--lib hldx
--hl hello.hl
--main Game
 
+# entry point
+-main Game
+-D windowTitle=Heaps Test
 -D windowSize=800x800
+
+# libraries
+-L heaps
+-L hldx
+
+# Output
+-hl game.hl
