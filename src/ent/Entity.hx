@@ -35,36 +35,53 @@ abstract class Entity {
 	}
 
 	public function update(dt:Float) {
-		
 		xr += dx;
 		dx *= 0.9;
-		yr += dy;
-		dy *= 0.9;
-		
 
-		while (xr > 0.5) {
+		if (game.level.isCollider(cx + 1, cy) && xr >= 0.7) {
+			xr = 0.7;
+			dx = 0;
+		}
+		if (game.level.isCollider(cx - 1, cy) && xr <= 0.3) {
+			xr = 0.3;
+			dx = 0;
+		}
+
+		while (xr > 1) {
 			xr--;
 			cx++;
 		}
-		while (xr < -0.5) {
+		while (xr < 0) {
 			xr++;
 			cx--;
 		}
-		while (yr > 0.5) {
+
+		yr += dy;
+		dy *= 0.9;
+
+		if (game.level.isCollider(cx, cy + 1) && yr >= 0.65) {
+			yr = 0.65;
+			dy = 0;
+		}
+		if (game.level.isCollider(cx, cy - 1) && yr <= 0.35) {
+			yr = 0.35;
+			dy = 0;
+		}
+		while (yr > 1) {
 			yr--;
 			cy++;
 		}
-		while (yr < -0.5) {
+		while (yr < 0) {
 			yr++;
 			cy--;
 		}
 
 		// Translate coordinates
 
-		xx = (cx + xr) * game.cellSize;
-		yy = (cy + yr) * game.cellSize;
+		xx = Std.int((cx + xr) * game.cellSize);
+		yy = Std.int((cy + yr) * game.cellSize);
 
-		sprite.x = xx;
-		sprite.y = yy;
+		sprite.x = xx -0.5 * game.cellSize;
+		sprite.y = yy -0.5 * game.cellSize;
 	}
 }

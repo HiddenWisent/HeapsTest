@@ -10,19 +10,25 @@ import haxe.Log;
 class Game extends App {
 	var player:Player;
 	var grid:TileGroup;
-
+	
+	// Global stuff
+	
+	public var level:Level;
 	public var cellSize:Int;
 
 	override function init() {
-		// initialize resources
+		// Initialize resources
 
 		Res.initEmbed();
 
-		// set grid cell size
+		// Set grid cell size
 
 		cellSize = 32;
 
-		// show grid
+		// Load test level
+
+		level = new Level(Res.wall.toTile(),[2,2,2,1,2,3,2,4,3,1,4,1,5,1,2,5,2,6,2,7,2,8,2,9]);
+		// Show grid
 
 		grid = new TileGroup(Res.gridElement.toTile(), s2d);
 		
@@ -37,13 +43,13 @@ class Game extends App {
 			i += cellSize;
 		}
 
-		// initialize player character
+		// Initialize player character
 
 		player = new Player(10, 10);
 	}
 
 	override function update(dt:Float) {
-		// repeat every frame
+		// Repeat every frame
 
 		player.update(dt);
 	}

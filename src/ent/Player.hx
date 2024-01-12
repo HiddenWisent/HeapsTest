@@ -41,7 +41,8 @@ class Player extends Entity {
 		super.update(dt);
 
 		if (Key.isPressed(Key.SPACE)) {
-			trace(cx + ' ' + cy);
+			trace("x: " + cx + xr + 'y: ' + cy + yr);
+			trace(game.level.isCollider(cx,cy));
 		}
 
 		cellIndicator.x = cx * game.cellSize;
