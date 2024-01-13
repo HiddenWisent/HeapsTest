@@ -1,12 +1,15 @@
-# class paths
+# Class paths
 -cp src
 
-# entry point
+# Entry point
 -main Game
+
+# Window settings
 -D windowTitle=Heaps Test
 -D windowSize=800x800
+-D windowFixed=1
 
-# libraries
+# Libraries
 -L heaps
 -L hldx
 

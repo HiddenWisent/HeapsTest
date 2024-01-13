@@ -1,3 +1,4 @@
+import sys.thread.EventLoop;
 import haxe.display.Display.FieldResolution;
 import dx.Window;
 import hxd.res.TiledMap;
@@ -10,29 +11,41 @@ import haxe.Log;
 class Game extends App {
 	var player:Player;
 	var grid:TileGroup;
-	
+
 	// Global stuff
-	
 	public var level:Level;
 	public var cellSize:Int;
+	public var gridSize:Int;
 
 	override function init() {
 		// Initialize resources
 
 		Res.initEmbed();
 
-		// Set grid cell size
+		// Set grid
 
+		var window = hxd.Window.getInstance();
 		cellSize = 32;
+		gridSize = Std.int(window.width / cellSize);
 
 		// Load test level
 
-		level = new Level(Res.wall.toTile(),[2,2,2,1,2,3,2,4,3,1,4,1,5,1,2,5,2,6,2,7,2,8,2,9]);
+		var levelWalls = [for (x in 0...gridSize + 1) [for (y in 0...gridSize + 1) false]];
+		for (x in 0...levelWalls.length) {
+			levelWalls[x][0] = true;
+			levelWalls[x][gridSize - 1] = true;
+		}
+		for (y in 1...levelWalls.length - 1){
+			levelWalls[0][y] = true;
+			levelWalls[gridSize - 1][y] = true;
+		}
+
+		level = new Level(Res.wall.toTile(), levelWalls);
+
 		// Show grid
 
 		grid = new TileGroup(Res.gridElement.toTile(), s2d);
-		
-		var window = hxd.Window.getInstance();
+
 		var i = 0;
 		while (i <= (window.width)) {
 			var j = 0;
