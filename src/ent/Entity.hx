@@ -1,8 +1,10 @@
 package ent;
 
+import h2d.*;
+
 abstract class Entity {
 	// Sprite
-	var sprite:h2d.Anim;
+	var sprite:Anim;
 
 	// Base coordinates
 	var cx:Int;
@@ -20,8 +22,9 @@ abstract class Entity {
 
 	var game:Game;
 
-	public function new(x, y) {
+	public function new(x:Int, y:Int, sprite:Tile) {
 		game = Game.instance;
+		splitTiles(sprite);
 		setCoordinates(x, y);
 	}
 
@@ -32,6 +35,15 @@ abstract class Entity {
 		cy = Std.int(y);
 		xr = (x - Math.floor(x));
 		yr = (x - Math.floor(y));
+
+		translateCoordinates();
+	}
+
+	// Temporary set up for spliting 1D sprite sheets
+
+	public function splitTiles(tiles:Tile) {
+		var frames = Std.int(tiles.width / tiles.height);
+		sprite = new Anim(tiles.split(frames), game.s2d);
 	}
 
 	public function update(dt:Float) {
@@ -76,12 +88,14 @@ abstract class Entity {
 			cy--;
 		}
 
-		// Translate coordinates
-
 		xx = Std.int((cx + xr) * game.cellSize);
 		yy = Std.int((cy + yr) * game.cellSize);
 
-		sprite.x = xx -0.5 * game.cellSize;
-		sprite.y = yy -0.5 * game.cellSize;
+		translateCoordinates();
+	}
+
+	function translateCoordinates() {
+		sprite.x = xx - 0.5 * game.cellSize;
+		sprite.y = yy - 0.5 * game.cellSize;
 	}
 }

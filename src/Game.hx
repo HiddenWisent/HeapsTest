@@ -1,12 +1,6 @@
-import sys.thread.EventLoop;
-import haxe.display.Display.FieldResolution;
-import dx.Window;
-import hxd.res.TiledMap;
-import format.abc.Data.ABCData;
 import hxd.*;
 import h2d.*;
 import ent.*;
-import haxe.Log;
 
 class Game extends App {
 	var player:Player;
@@ -16,6 +10,9 @@ class Game extends App {
 	public var level:Level;
 	public var cellSize:Int;
 	public var gridSize:Int;
+
+	public var ints:List<Int>;
+	public var entities:List<Entity>;
 
 	override function init() {
 		// Initialize resources
@@ -56,15 +53,32 @@ class Game extends App {
 			i += cellSize;
 		}
 
+		// Initialize entities
+
+		entities = new List<Entity>();
+
 		// Initialize player character
 
+
+
 		player = new Player(10, 10);
+		entities.add(player);
+		
+		// Coins test
+
+		entities.add(new Coin(5,5));
+		entities.add(new Coin(10,10));
+		entities.add(new Coin(5,6));
+		entities.add(new Coin(5,7));
+
 	}
 
 	override function update(dt:Float) {
 		// Repeat every frame
 
-		player.update(dt);
+		for (item in entities){
+			item.update(dt);
+		}
 	}
 
 	public static var instance:Game;
